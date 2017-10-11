@@ -26,7 +26,10 @@ for i in list(range(4))[::-1]:
         #screen = cv2.cvtColor(screen, cv2.COLOR_BGR2RGB)
         screen = cv2.cvtColor(screen, cv2.COLOR_RGB2GRAY)
     
-        ball_center, left_bar_center, right_bar_center = get_objects_locations(screen)
+        #ball_center, left_bar_center, right_bar_center = get_objects_locations(screen)
+        obj_locations = get_objects_locations(screen)
+        ball_center, left_bar_center, right_bar_center = obj_locations[0:2], obj_locations[2:4], obj_locations[4:6]
+        
         
         delta_pos = ball_center[1] - right_bar_center[1]
         
