@@ -1,6 +1,5 @@
 from grabscreen import grab_screen
 import cv2
-#from get_pong_data import get_objects_locations
 import numpy as np
 
 

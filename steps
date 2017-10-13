@@ -1,0 +1,8 @@
+get screen data
+get object locations
+get keys pressed
+get train data
+create neural net model
+train neural net
+press keys
+infer actions
