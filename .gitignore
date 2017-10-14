@@ -100,8 +100,8 @@ ENV/
 # mypy
 .mypy_cache/
 
-model
-pygta5
-train_data
-gym
-old
+model/
+pygta5/
+train_data/
+gym/
+old/
