@@ -6,9 +6,7 @@ import numpy as np
 def get_objects_locations(img):
     
     try:
-        #Simplify image using threshold (maybe not necessary)
-        #_, cent_img = cv2.threshold(cent_img,10,255,cv2.THRESH_BINARY)
-
+        
         #Get connected compontents in the image
         n_elem, labels, stats, centroids = cv2.connectedComponentsWithStats(img, 8, cv2.CV_32S)
 
@@ -16,9 +14,9 @@ def get_objects_locations(img):
         calc_features = list()    
         for i, (x0,y0,width,height,area) in enumerate(stats):
             #Calc ball feature
-            ball_feature = abs(width/height - 1 + area - width*height)#abs(width + height - 8 - 8 + area - 64)
+            ball_feature = abs(width/height - 1 + area - width*height)
             #Bar feature
-            bar_feature = abs(height/width - 4.6 + area - width*height)#abs(width + height - 10 - 46 + area - 460)
+            bar_feature = abs(height/width - 4.6 + area - width*height)
 
             calc_features.append((i, ball_feature, bar_feature))
 

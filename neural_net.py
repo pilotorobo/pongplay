@@ -22,7 +22,7 @@ class NeuralNetwork():
     
         h1 = tf.layers.dense(self.x, 20, activation=tf.nn.relu)
         h2 = tf.layers.dense(h1, 20, activation=tf.nn.relu)
-        h3 = tf.layers.dense(h2, 10, activation=tf.nn.relu)
+        #h3 = tf.layers.dense(h2, 10, activation=tf.nn.relu)
     
         self.logits = tf.layers.dense(h2, 3, activation=None)
 
@@ -35,7 +35,7 @@ class NeuralNetwork():
         self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
         #Optimizer
-        self.optimizer = tf.train.AdamOptimizer(0.001).minimize(self.cost)
+        self.optimizer = tf.train.AdamOptimizer(0.01).minimize(self.cost)
         #self.optimizer = tf.train.GradientDescentOptimizer(0.001).minimize(self.cost)
             
     def fit(self, X, Y):
@@ -44,10 +44,7 @@ class NeuralNetwork():
         x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.4, random_state=42)
         x_valid, x_test, y_valid, y_test = train_test_split(x_test, y_test, test_size=0.5, random_state=42)        
         
-        epochs = 20000
-
-        #cost_list = []
-        #acc_list = []
+        epochs = 25000
 
         self.sess = tf.Session()
         
@@ -63,8 +60,6 @@ class NeuralNetwork():
                 self.y: y_train
             })
             
-            #cost_list.append(cost_value)
-
             if e % 500 == 0:
                 print("Epoch: {} Cost: {}".format(e, cost_value))
 
@@ -73,8 +68,6 @@ class NeuralNetwork():
                 self.x: x_valid,
                 self.y: y_valid
             })
-                
-            #acc_list.append(acc_value)
 
             if e % 500 == 0:
                 print("Accuracy: {}".format(acc_value))
@@ -100,13 +93,13 @@ class NeuralNetwork():
     
     def save(self):
         saver = tf.train.Saver()
-        save_path = saver.save(self.sess, "./model/model_v1.ckpt")
+        save_path = saver.save(self.sess, "./model/model_v15.ckpt")
     
     def load(self):
         self.sess = tf.Session()
         
         saver = tf.train.Saver()
-        saver.restore(self.sess, "./model/model_v1.ckpt")
+        saver.restore(self.sess, "./model/model_v15.ckpt")
         
         
         
@@ -120,64 +113,17 @@ def set_ball_speed(dataset):
     speed_datapoints = dataset[1:, :2] - dataset[0:-1, :2]
     #Insert new datapoints after the ball position features
     new_dataset = np.concatenate((dataset[1:, :2], speed_datapoints, dataset[1:, 2:]), axis=1)
-    return new_dataset   
-
-
-def set_size_invariant_features(dataset):
-    """
-    Function to set origin of the game to 0,0 and range it from [0,1] in the horizontal and vertical axis.
-    """
-    
-    #Get max and min feature values of the entire dataset
-    min_values = np.amin(dataset, axis=0)
-    max_values = np.amax(dataset, axis=0)
-    
-    left_offset = min_values[2] #Get the min value of the first bar horizontal position
-    top_offset = min_values[1] #Get the min value of the ball vertical position
-    
-    #Subtract the second bar maximum h position from the first bar minimum h position
-    range_h = max_values[4] - min_values[2]
-    #Subtract the ball maximum v position from the ball minimum v position
-    range_v = max_values[1] - min_values[1]
-    
-    offset_vector = np.array([left_offset, top_offset, left_offset, top_offset, left_offset, top_offset, 0])
-    range_vector = np.array([range_h, range_v, range_h, range_v, range_h, range_v, 1])
-    
-    new_dataset = dataset - offset_vector
-    new_dataset = new_dataset / range_vector
-    
-    return new_dataset
-    
-#    #We will set the width the difference between the bars horizontal positions max and min
-#    gwindow_width = max_values[4] - min_values[2]
-#    #We will set the height as the difference between the max and mins positions the ball has deslocated
-#    gwindow_height = max_values[1] - min_values[1]
-#    
-#    #Create vector to transform features to position invariant
-#    #We will divide horizontal features by the width and vertical features by the height
-#    pos_invariant_vector = np.array([
-#        gwindow_width, gwindow_height, #Ball position
-#        gwindow_width, gwindow_height, #Bar1 position
-#        gwindow_width, gwindow_height, #Bar2 position
-#        1 #datapoint label, stays the same
-#    ])
-    
-    #return dataset/pos_invariant_vector
-
-    
+    return new_dataset       
     
 if __name__ == "__main__":
     
     #Load dataset
-    dataset = np.load(file="traindata_v1.npy", encoding='bytes')
+    dataset = np.load(file="traindata_v15.npy", encoding='bytes')
 
     #Inspect dataset
     labels_counter = Counter(dataset[:,6].tolist())
     print(labels_counter)
     print("Prediction must be higher than: {}".format(labels_counter[0.0]/dataset.shape[0]))
-    
-    
-    #dataset = set_size_invariant_features(dataset)
     
     dataset = set_ball_speed(dataset)
     

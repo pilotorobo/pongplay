@@ -33,7 +33,7 @@ def main():
     
         #Pass next frame every 10ms
         #Exit when 'q' is pressed
-        if cv2.waitKey(10) == ord('q') or key_pressed == -1:
+        if cv2.waitKey(1) == ord('q') or key_pressed == -1:
             cv2.destroyAllWindows()
             break
         
@@ -64,7 +64,7 @@ def main():
     print(train_data_buffer.shape)
     print(train_data_buffer[:100])
 
-    np.save("traindata_v1.npy", train_data_buffer)
+    np.save("traindata_v15.npy", train_data_buffer)
     print('Data saved.')                    
 
 
