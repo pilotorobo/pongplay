@@ -5,19 +5,20 @@ https://medium.com/pilotorobo
 
 Dependencias:
 
-numpy==1.13.1
-scikit-learn==0.19.0
-opencv-python==3.3.0.10
-pywin32==220
-tensorflow==1.2.1
+* numpy==1.13.1
+* scikit\-learn==0.19.0
+* opencv-python==3.3.0.10
+* pywin32==220
+* tensorflow==1.2.1
 
 
-Como rodar:
+## Como rodar:
 
 O projeto possui três arquivos principais:
--get_train_data.py - Captura seus movimentos durante o jogo e salva junto com os dados da tela em um arquivo.
--neural_net.py - Treina uma neural network com os dados de treino capturados.
--infer_action.py - Utiliza a neural network treinada para simular os botões a ser pressionados durante o jogo, tentando copiar os movimentos do jogador.
+
+* get_train_data.py - Captura seus movimentos durante o jogo e salva junto com os dados da tela em um arquivo.
+* neural_net.py - Treina uma neural network com os dados de treino capturados.
+* infer_action.py - Utiliza a neural network treinada para simular os botões a ser pressionados durante o jogo, tentando copiar os movimentos do jogador.
 
 
 O projeto já acompanha dados de treino e um modelo treinado, então você pode pular as etapas de coletar dados e treinar a rede se quiser.
