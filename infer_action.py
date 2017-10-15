@@ -20,7 +20,7 @@ def main():
     infering = False
     
     #Load neural network
-    nn = DecisionTree()#NeuralNetwork()
+    nn = NeuralNetwork()
     nn.load()
         
     #Call function to clear buffer of pressed keys
@@ -57,8 +57,7 @@ def main():
         if infering:
                         
             prediction_probs = nn.predict([screen_features])[0] 
-            #prediction = np.argmax(prediction_probs)
-            prediction = prediction_probs
+            prediction = np.argmax(prediction_probs)
             
             if prediction == 0:
                 print(prediction_probs, "Nothing")
