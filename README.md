@@ -5,6 +5,7 @@ https://medium.com/pilotorobo
 
 Dependencias:
 
+* Python 3.6
 * numpy==1.13.1
 * scikit\-learn==0.19.0
 * opencv-python==3.3.0.10
